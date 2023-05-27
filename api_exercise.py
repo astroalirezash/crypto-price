@@ -48,7 +48,7 @@ def res1(coin_name):
             break
 
     if coin:
-        att_all = f'{coin["name"]}/"{coin["symbol"]}" price: "{coin["price"]}USDT"'
+        att_all = f'{coin["name"]}/"{coin["symbol"]}" price: "{round(float(coin["price"]), 2)} USDT"'
         return att_all
     else:
         return 'Coin did not found!'
