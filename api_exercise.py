@@ -34,21 +34,26 @@ searched_coin = 'Bitcoin'
 
 
 def res1(coin_name):
-    response = requests.request('GET', f'https://api.coinranking.com/v2/search-suggestions?query={coin_name}',
-                                headers=header
-                                )
+    try:
+        response = requests.request('GET', f'https://api.coinranking.com/v2/search-suggestions?query={coin_name}',
+                                    headers=header
+                                    )
 
-    res = response.json()['data']['coins']
+        res = response.json()['data']['coins']
 
-    coin = None
+        coin = None
 
-    for i in res:
-        if i['name'] == searched_coin or i['symbol'] == searched_coin:
-            coin = i
-            break
+        for i in res:
+            if i['name'] == searched_coin or i['symbol'] == searched_coin:
+                coin = i
+                break
 
-    if coin:
-        att_all = f'{coin["name"]}/"{coin["symbol"]}" price: "{round(float(coin["price"]), 2)} USDT"'
-        return att_all
-    else:
-        return 'Coin did not found!'
+        if coin:
+            att_all = f'{coin["name"]}/"{coin["symbol"]}" price: "{round(float(coin["price"]), 2)} USDT"'
+            return att_all
+        else:
+            return 'Coin did not found!'
+    except:
+        print(ConnectionError(
+            f'Unable to Connect "https://api.coinranking.com/v2/search-suggestions?query={coin_name}"'))
+        return 'No Connection'
